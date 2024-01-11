@@ -3,9 +3,10 @@ import apiClient from "../services/api-client";
 import {Simulate} from "react-dom/test-utils";
 import cancel = Simulate.cancel;
 
-interface Game {
+export interface Game {
     id: number;
     name: string;
+    background_image: string;
 }
 interface GameResponse{
     count: number;
