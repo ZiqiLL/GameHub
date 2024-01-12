@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import apiClient from "../services/api-client";
-import {Simulate} from "react-dom/test-utils";
-import cancel = Simulate.cancel;
-import {CanceledError} from "axios";
+import {AxiosRequestConfig, CanceledError} from "axios";
+import {Genre} from "./useGenres";
 
 export interface Platform{
     id: number;
@@ -20,7 +19,8 @@ interface GameResponse{
     count: number;
     results: Game[];
 }
-function useGames() {
+function useGames( selectedGenre: Genre | null) {
+    const requestConfig: AxiosRequestConfig  = { params: { genres: selectedGenre?.id}}
     const [games, setGames] = useState<Game[]>([])
     const [errors, setErrors] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +31,7 @@ function useGames() {
 
 
         setIsLoading(true)
-        apiClient.get<GameResponse>('/games', { signal: controller.signal })
+        apiClient.get<GameResponse>('/games', { signal: controller.signal, ...requestConfig })
             .then(res => {
                 setGames(res.data.results);
                 setIsLoading(false);
@@ -43,7 +43,7 @@ function useGames() {
             });
 
         return () => controller.abort();
-    }, []);
+    }, [selectedGenre?.id]);
 
     return {games, errors, isLoading}
 }
