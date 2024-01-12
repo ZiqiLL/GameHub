@@ -7,14 +7,14 @@ interface Pros {
     selectedGenre: Genre | null;
 }
 function GenreList({ onSelectGenre, selectedGenre } : Pros) {
-    const {genres, errors, isLoading} = useGenres()
+    const {data, errors, isLoading} = useGenres();
 
     if (errors) return null;
     if (isLoading) return <Spinner />;
 
     return (
         <List>
-            {genres.map( genre =>
+            {data.map( genre =>
                 <ListItem key={genre.id} paddingY='8px'>
                     <HStack>
                         <Image

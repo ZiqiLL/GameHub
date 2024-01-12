@@ -8,7 +8,7 @@ interface Pros {
     selectedGenre: Genre | null;
 }
 function GameGrid( {selectedGenre} : Pros ) {
-    const {games, errors, isLoading} = useGames(selectedGenre)
+    const {data, errors, isLoading} = useGames(selectedGenre)
     const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
         14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
@@ -17,7 +17,7 @@ function GameGrid( {selectedGenre} : Pros ) {
             {errors && <Text>{errors}</Text>}
             <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 5}} padding={'10px'} spacing={10}>
                 {isLoading && skeletons.map( skeleton => <GameCardSkeleton key={skeleton}/>)}
-                {games.map(game => <GameCard game={game} key={game.id} />)}
+                {data.map(game => <GameCard game={game} key={game.id} />)}
             </SimpleGrid>
         </>
     )
