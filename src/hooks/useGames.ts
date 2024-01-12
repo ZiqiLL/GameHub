@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import apiClient from "../services/api-client";
 import {Simulate} from "react-dom/test-utils";
 import cancel = Simulate.cancel;
+import {CanceledError} from "axios";
 
 export interface Platform{
     id: number;
@@ -36,8 +37,9 @@ function useGames() {
                 setIsLoading(false);
             })
             .catch(err => {
-                if(err instanceof cancel) return;
+                if(err instanceof CanceledError) return;
                 setErrors(err.message);
+                setIsLoading(false)
             });
 
         return () => controller.abort();

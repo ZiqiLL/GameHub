@@ -12,10 +12,11 @@ function GameGrid() {
 
     return (
         <>
-        <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 5}} padding={'10px'} spacing={10}>
-            {isLoading && skeletons.map( skeleton => <GameCardSkeleton key={skeleton}/>)}
-            {games.map(game => <GameCard game={game} key={game.id} />)}
-        </SimpleGrid>
+            {errors && <Text>{errors}</Text>}
+            <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 5}} padding={'10px'} spacing={10}>
+                {isLoading && skeletons.map( skeleton => <GameCardSkeleton key={skeleton}/>)}
+                {games.map(game => <GameCard game={game} key={game.id} />)}
+            </SimpleGrid>
         </>
     )
 }
